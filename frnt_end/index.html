@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blockchain Voting | Login</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body class="gray-bg">
+    <div class="middle-box text-center loginscreen animated fadeInDown">
+        <div>
+            <div>
+                <h1 class="logo-name"><img src="images/bchain.png" width="150" alt="Blockchain Logo"></h1>
+            </div>
+            <h3>Blockchain Based Voting System</h3>
+
+            <!-- Login Form -->
+            <form id="loginForm">
+                <div class="m-t">
+                    <div class="form-group">
+                        <input type="text" id="username" name="username" class="form-control" placeholder="Username" required autofocus>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" name="password" id="password" class="form-control" placeholder="Password" required>
+                    </div>
+                    <button id="login" type="submit" class="btn btn-primary block full-width m-b">Login</button>
+                </div>
+            </form>
+
+            <!-- Link to show the registration form -->
+            <p>Don't have an account? <a href="javascript:void(0);" id="showRegistrationForm">Register here</a></p>
+
+            <!-- Registration Form (Initially hidden) -->
+            <div id="registrationForm" class="m-t" style="display:none;">
+                <div class="form-group">
+                    <input type="text" id="regUsername" name="regUsername" class="form-control" placeholder="Username" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" name="regPassword" id="regPassword" class="form-control" placeholder="Password" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" name="regConfirmPassword" id="regConfirmPassword" class="form-control" placeholder="Confirm Password" required>
+                </div>
+                <button id="register" class="btn btn-success block full-width m-b">Register</button>
+                <button type="button" id="backToLogin" class="btn btn-link block full-width m-b">Back to Login</button>
+            </div>
+
+            <br>
+            <div id="messagebox" class="alert alert-danger" style="display:none;">
+                <strong id="errormsg"></strong>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="text-center">
+            <p>Running on Ganache CLI</p>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="js/login.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#messagebox').hide();
+
+            // Switch between login and registration forms
+            $('#backToLogin').click(function() {
+                $('#registrationForm').hide();
+                $('#loginForm').show();
+                $('#messagebox').hide();
+            });
+
+            $('#showRegistrationForm').click(function() {
+                $('#loginForm').hide();
+                $('#registrationForm').show();
+                $('#messagebox').hide();
+            });
+
+            $('#loginForm').submit(function(event) {
+                event.preventDefault();
+
+                var username = $('#username').val();
+                var password = $('#password').val();
+
+                if (!username || !password) {
+                    $('#errormsg').text('Please fill in all fields');
+                    $('#messagebox').show();
+                    return;
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: "/login",
+                    data: { username: username, password: password },
+                    success: function(response) {
+                        $('#messagebox').removeClass('alert-danger').addClass('alert-success');
+                        $('#errormsg').text('Login successful! Redirecting...');
+                        $('#messagebox').show();
+                        setTimeout(function() {
+                            window.location = '/app';
+                        }, 1500);
+                    },
+                    error: function(xhr) {
+                        $('#messagebox').removeClass('alert-success').addClass('alert-danger');
+                        $('#errormsg').text(xhr.responseJSON?.message || 'Invalid Username/Password');
+                        $('#messagebox').show();
+                    }
+                });
+            });
+
+            $('#register').click(function() {
+                var regUsername = $('#regUsername').val();
+                var regPassword = $('#regPassword').val();
+                var regConfirmPassword = $('#regConfirmPassword').val();
+
+                if (!regUsername || !regPassword || !regConfirmPassword) {
+                    $('#errormsg').text('Please fill in all fields');
+                    $('#messagebox').show();
+                    return;
+                }
+
+                if (regPassword !== regConfirmPassword) {
+                    $('#errormsg').text('Passwords do not match');
+                    $('#messagebox').show();
+                    return;
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: "/register",
+                    data: { username: regUsername, password: regPassword },
+                    success: function(response) {
+                        $('#messagebox').removeClass('alert-danger').addClass('alert-success');
+                        $('#errormsg').text('Registration successful! Please log in.');
+                        $('#messagebox').show();
+                        setTimeout(function() {
+                            $('#backToLogin').click();
+                        }, 1500);
+                    },
+                    error: function(xhr) {
+                        $('#messagebox').removeClass('alert-success').addClass('alert-danger');
+                        $('#errormsg').text(xhr.responseJSON?.message || 'Registration failed');
+                        $('#messagebox').show();
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
