@@ -1,0 +1,36 @@
+{
+  "name": "aiswarya",
+  "version": "1.0.0",
+  "description": "This guide will walk you through the steps to set up and run the project.",
+  "main": "index.js",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "ethereumjs-testrpc": "^6.0.3",
+    "express": "^4.16.3",
+    "fs": "^0.0.1-security",
+    "mongoose": "^8.9.6",
+    "morgan": "^1.10.0",
+    "password-hash": "^1.2.2",
+    "request": "^2.88.2",
+    "solc": "^0.4.26",
+    "web3": "^0.19.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "",
+    "url": "+https://.com/sanattaori/aiswarya."
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://.com/sanattaori/aiswarya/issues"
+  },
+  "homepage": "https://.com/sanattaori/aiswarya#readme",
+  "keywords": []
+}

@@ -1,0 +1,18 @@
+1. Install MongoDB Compass
+2. Create a connection named as BLK
+3. Create a database named as BLK
+4. Import the BLK.wallets collection in the BLK database
+
+5. Do all the other steps as usual
+
+6. Need to register on first launch of --node index.js--
+
+7. Then Log in with the registered credentials.
+
+8. Use the walletID and RefNo in the 'wallets' collection.
+
+walletID: 0x9876543210abcdef1234567890abcdef12345678
+refNo: VOTE123456
+
+
+**Need to upgrade this project to detect duplicate walletids and refnos. Work in Progress on that part.**

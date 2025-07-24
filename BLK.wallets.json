@@ -1,0 +1,7 @@
+[{
+  "_id": {
+    "$oid": "67a0f083d29c9cb6f1159a9f"
+  },
+  "walletId": "0x9876543210abcdef1234567890abcdef12345678",
+  "refNo": "VOTE123456"
+}]
